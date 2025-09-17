@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gramshiksha - Education Portal for Rural Areas</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-graduation-cap"></i>
+                <span data-translate="site-name">Gramshiksha</span>
+            </div>
+            
+            <div class="nav-menu">
+                <a href="#home" class="nav-link" data-translate="nav-home">Home</a>
+                <a href="#education" class="nav-link" data-translate="nav-education">Education</a>
+                <a href="#signature" class="nav-link" data-translate="nav-signature">Audio Signature</a>
+                <a href="#awareness" class="nav-link" data-translate="nav-awareness">Cyber Awareness</a>
+                <a href="#contact" class="nav-link" data-translate="nav-contact">Contact</a>
+            </div>
+
+            <div class="nav-actions">
+                <div class="language-selector">
+                    <button class="lang-btn active" onclick="changeLanguage('en')">EN</button>
+                    <button class="lang-btn" onclick="changeLanguage('te')">తె</button>
+                    <button class="lang-btn" onclick="changeLanguage('hi')">हि</button>
+                </div>
+                <button class="login-btn" onclick="openModal('loginModal')" data-translate="login">Login</button>
+                <button class="signup-btn" onclick="openModal('signupModal')" data-translate="signup">Sign Up</button>
+            </div>
+
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 data-translate="hero-title">Welcome to Gramshiksha</h1>
+            <p data-translate="hero-subtitle">Quality Education for Rural Communities</p>
+            <p data-translate="hero-description">Access free educational content, learn new skills, and stay aware of cyber security in your local language.</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="scrollToSection('education')" data-translate="start-learning">Start Learning</button>
+                <button class="btn-secondary" onclick="scrollToSection('signature')" data-translate="create-signature">Create Audio Signature</button>
+            </div>
+        </div>
+        <div class="hero-image">
+            <i class="fas fa-book-reader"></i>
+        </div>
+    </section>
+
+    <!-- Education Section -->
+    <section id="education" class="education-section">
+        <div class="container">
+            <h2 data-translate="education-title">Educational Resources</h2>
+            <p data-translate="education-subtitle">Learn at your own pace with our comprehensive video library</p>
+            
+            <div class="subjects-grid">
+                <div class="subject-card" onclick="openSubject('english')">
+                    <i class="fas fa-language"></i>
+                    <div class="video-grid">
+                        <div class="video-card">
+                           <iframe width="560" height="315" src="https://www.youtube.com/embed/7fAJ13DgvYM" frameborder="0" allowfullscreen></iframe>
+                           <h2>Alphabets</h2>
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/lTV9r8N1UI8" frameborder="0" allowfullscreen></iframe>
+                           <h2>ALphabets prouncations</h2>
+                           <a href="english.html" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block;">English content</a>
+<a href="quiz-en.html" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block;">Quiz</a>
+
+                            <div class="video-info">
+                                
+                            </div>
+                        </div>
+                    <h3 data-translate="subject-english">English</h3>
+                    <p data-translate="subject-english-desc">Basic English communication and grammar</p>
+                </div>
+                
+                <div class="subject-card" onclick="openSubject('telugu')">
+                    <i class="fas fa-font"></i>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <iframe width="560" height="315" src="https://www.youtube.com/embed/h8M8TsK47oU" frameborder="0" allowfullscreen></iframe>
+                            <h2>Telugu Alphabet</h2> 
+                            <iframe width="560" height="315"  src="https://www.youtube.com/embed/o719xJL76dU" frameborder="0" allowfullscreen></iframe>
+                             <h2>Telugu Guninthapu Gurthulu</h2>
+                             <a href="telugu.html" style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block;">Telugu content</a>
+
+                            <div class="video-info">
+                                
+                            </div>
+                        </div>
+                    <h3 data-translate="subject-telugu">Telugu</h3>
+                    <p data-translate="subject-telugu-desc">Telugu literature and language skills</p>
+                </div>
+                
+                <div class="subject-card" onclick="openSubject('Mathematices')">
+                    <i class="fas fa-microscope"></i>
+                    <div class="video-grid">
+                      <div class="video-card">
+  <!-- First Video -->
+  <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/hsIeeN2bLaA"
+          frameborder="0"
+          allowfullscreen>
+  </iframe>
+
+  <!-- Section with Second Video and Links -->
+  <div class="section">
+    <h2>🎥 Video Embed</h2>
+
+    <!-- Second Video -->
+    <iframe width="560" height="315"
+            src="https://www.youtube.com/embed/4T1BXxKbI-o"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen>
+    </iframe>
+
+    <!-- Action Buttons -->
+    <div style="margin-top: 10px;">
+      <a href="maths.html"
+         style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block; margin-right: 10px;">
+         Mathematics Content
+      </a>
+      <a href="quiz-ma.html"
+         style="background-color: #3498db; color: white; padding: 8px 16px; border-radius: 5px; text-decoration: none; display: inline-block;">
+         Quiz
+      </a>
+    </div>
+  </div>
+</div>
+
+
+                            <div class="video-info">
+                                
+                            </div>
+                        </div>
+                    <h3 data-translate="subject-science">Science</h3>
+                    <p data-translate="subject-science-desc">Basic General concepts</p>
+                </div>
+                
+                <div class="subject-card" onclick="openSubject('gk')">
+                    <i class="fas fa-globe"></i>
+                    <div class="video-grid">
+                        <div class="video-card">
+                          <iframe width="560" height="315" src="https://www.youtube.com/embed/Yocja_N5s1I" frameborder="0" allowfullscreen></iframe>
+                       </div>
+                    <h3 data-translate="subject-gk">General Knowledge</h3>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Audio Signature Section -->
+    <section id="signature" class="signature-section">
+        <div class="container">
+            <h2 data-translate="signature-title">Audio Signature Generator</h2>
+            <p data-translate="signature-subtitle">Create your unique audio signature for authentication</p>
+            
+            <div class="signature-tool">
+                <div class="recording-area">
+                    <div class="microphone-icon" id="micIcon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <p id="recordingStatus" data-translate="click-to-record">Click microphone to start recording</p>
+                    <div class="recording-controls">
+                        <button id="recordBtn" class="record-btn" data-translate="start-recording">Start Recording</button>
+                        <button id="stopBtn" class="stop-btn" disabled data-translate="stop-recording">Stop Recording</button>
+                        <button id="playBtn" class="play-btn" disabled data-translate="play-recording">Play Recording</button>
+                        <button id="downloadBtn" class="download-btn" disabled data-translate="download-signature">Download Signature</button>
+                    </div>
+                </div>
+                <div class="waveform" id="waveform"></div>
+            </div>
+           </div>
+    </section>
+
+    <!-- Cyber Awareness Section -->
+    <section id="awareness" class="awareness-section">
+        <div class="container">
+            <h2 data-translate="awareness-title">Cyber Crime Awareness</h2>
+            <p data-translate="awareness-subtitle">Stay safe online with these important tips and resources</p>
+            
+            <div class="awareness-content">
+                <div class="awareness-videos">
+                    <h3 data-translate="awareness-videos-title">Educational Videos</h3>
+                    <div class="video-grid">
+                        <div class="video-card">
+                            <iframe src="https://www.youtube.com/embed/-EyAMbymzxs" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-info">
+                                <h4 data-translate="video1-title">Internet Safety Basics</h4>
+                                <p data-translate="video1-desc">Learn fundamental internet safety practices</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <iframe src="https://www.youtube.com/embed/MlDfCBOo1Sw" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-info">
+                                <h4 data-translate="video2-title">Password Security</h4>
+                                <p data-translate="video2-desc">How to create and manage secure passwords</p>
+                            </div>
+                        </div>
+                        <div class="video-card">
+                            <iframe src="https://www.youtube.com/embed/R3zsG5vdRYE" frameborder="0" allowfullscreen></iframe>
+                            <div class="video-info">
+                                <h4 data-translate="video2-title">Password Security</h4>
+                                <p data-translate="video2-desc">How to create and manage secure passwords</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="emergency-contacts">
+                    <h3 data-translate="emergency-title">Emergency Contacts</h3>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <div class="contact-info">
+                                <h4 data-translate="cyber-helpline">Cyber Crime Helpline</h4>
+                                <a href="tel:1930" class="phone-number">1930</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-shield-alt"></i>
+                            <div class="contact-info">
+                                <h4 data-translate="police-helpline">Police Helpline</h4>
+                                <a href="tel:100" class="phone-number">100</a>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <div class="contact-info">
+                                <h4 data-translate="emergency-helpline">Emergency Services</h4>
+                                <a href="tel:112" class="phone-number">112</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+     <div>
+        <a href="interest.html" style="background-color: #3498db; color: white; padding: 10px 20px; border-radius: 5px; text-decoration: none; font-weight: bold; display: inline-block;">Interest Calculator</a>
+
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2 data-translate="contact-title">Contact Us</h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div>
+                            <h4 data-translate="email">Email</h4>
+                            <p>info@gramshiksha.edu</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div>
+                            <h4 data-translate="phone">Phone</h4>
+                            <a href="tel:+919876543210">+91 8328624400</a>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div>
+                            <h4 data-translate="address">Address</h4>
+                            <p data-translate="address-text">Rural Education Center, India</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="contact-form">
+                    <input type="text" placeholder="Your Name" data-translate-placeholder="name-placeholder" required>
+                    <input type="email" placeholder="Your Email" data-translate-placeholder="email-placeholder" required>
+                    <textarea placeholder="Your Message" data-translate-placeholder="message-placeholder" required></textarea>
+                    <button type="submit" data-translate="send-message">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+   
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Gramshiksha</h3>
+                    <p data-translate="footer-desc">Empowering rural communities through digital education</p>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="quick-links">Quick Links</h4>
+                    <ul>
+                        <li><a href="#home" data-translate="nav-home">Home</a></li>
+                        <li><a href="#education" data-translate="nav-education">Education</a></li>
+                        <li><a href="#signature" data-translate="nav-signature">Audio Signature</a></li>
+                        <li><a href="#awareness" data-translate="nav-awareness">Cyber Awareness</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4 data-translate="follow-us">Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Gramshiksha. <span data-translate="rights-reserved">All rights reserved.</span></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('loginModal')">&times;</span>
+            <h2 data-translate="login">Login</h2>
+            <form class="auth-form">
+                <input type="email" placeholder="Email" data-translate-placeholder="email-placeholder" required>
+                <input type="password" placeholder="Password" data-translate-placeholder="password-placeholder" required>
+                <button type="submit" data-translate="login">Login</button>
+                <p data-translate="no-account">Don't have an account? <a href="#" onclick="switchModal('loginModal', 'signupModal')" data-translate="signup">Sign up</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Signup Modal -->
+    <div id="signupModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('signupModal')">&times;</span>
+            <h2 data-translate="signup">Sign Up</h2>
+            <form class="auth-form">
+                <input type="text" placeholder="Full Name" data-translate-placeholder="name-placeholder" required>
+                <input type="email" placeholder="Email" data-translate-placeholder="email-placeholder" required>
+                <input type="password" placeholder="Password" data-translate-placeholder="password-placeholder" required>
+                <input type="password" placeholder="Confirm Password" data-translate-placeholder="confirm-password-placeholder" required>
+                <button type="submit" data-translate="signup">Sign Up</button>
+                <p data-translate="have-account">Already have an account? <a href="#" onclick="switchModal('signupModal', 'loginModal')" data-translate="login">Login</a></p>
+            </form>
+        </div>
+    </div>
+
+    <!-- Subject Modal -->
+    <div id="subjectModal" class="modal">
+        <div class="modal-content large">
+            <span class="close" onclick="closeModal('subjectModal')">&times;</span>
+            <h2 id="subjectTitle"></h2>
+            <div id="subjectContent" class="subject-content"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

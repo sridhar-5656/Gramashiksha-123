@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>हिंदी वर्णमाला शिक्षण</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #fff8dc;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #b22222;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: #dcdcdc;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .tab.active {
+      background: #b22222;
+      color: white;
+    }
+
+    .content {
+      display: none;
+      background: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    .grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .box {
+      padding: 10px;
+      background: #ffe4b5;
+      border-radius: 5px;
+      text-align: center;
+      width: 70px;
+      font-size: 20px;
+    }
+
+    .example {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+  </style>
+</head>
+<body>
+
+<h1>हिंदी वर्णमाला शिक्षण</h1>
+
+<div class="tabs">
+  <div class="tab active" onclick="showTab(0)">स्वर</div>
+  <div class="tab" onclick="showTab(1)">व्यंजन</div>
+  <div class="tab" onclick="showTab(2)">गुणिताक्षर</div>
+  <div class="tab" onclick="showTab(3)">शब्द उदाहरण</div>
+</div>
+
+<div class="content active" id="tab0">
+  <h2>स्वर (Vowels)</h2>
+  <div class="grid">
+    <div class="box">अ</div>
+    <div class="box">आ</div>
+    <div class="box">इ</div>
+    <div class="box">ई</div>
+    <div class="box">उ</div>
+    <div class="box">ऊ</div>
+    <div class="box">ऋ</div>
+    <div class="box">ए</div>
+    <div class="box">ऐ</div>
+    <div class="box">ओ</div>
+    <div class="box">औ</div>
+    <div class="box">अं</div>
+    <div class="box">अः</div>
+  </div>
+</div>
+
+<div class="content" id="tab1">
+  <h2>व्यंजन (Consonants)</h2>
+  <div class="grid">
+    <div class="box">क</div><div class="box">ख</div><div class="box">ग</div><div class="box">घ</div><div class="box">ङ</div>
+    <div class="box">च</div><div class="box">छ</div><div class="box">ज</div><div class="box">झ</div><div class="box">ञ</div>
+    <div class="box">ट</div><div class="box">ठ</div><div class="box">ड</div><div class="box">ढ</div><div class="box">ण</div>
+    <div class="box">त</div><div class="box">थ</div><div class="box">द</div><div class="box">ध</div><div class="box">न</div>
+    <div class="box">प</div><div class="box">फ</div><div class="box">ब</div><div class="box">भ</div><div class="box">म</div>
+    <div class="box">य</div><div class="box">र</div><div class="box">ल</div><div class="box">व</div>
+    <div class="box">श</div><div class="box">ष</div><div class="box">स</div><div class="box">ह</div>
+  </div>
+</div>
+
+<div class="content" id="tab2">
+  <h2>गुणिताक्षर (Vowel Combinations)</h2>
+  <div class="example">क + आ = का</div>
+  <div class="example">ख + इ = खि</div>
+  <div class="example">ग + ई = गी</div>
+  <div class="example">घ + उ = घु</div>
+  <div class="example">च + ए = चे</div>
+  <div class="example">ज + ओ = जो</div>
+  <div class="example">ट + औ = टौ</div>
+  <div class="example">न + ऐ = नै</div>
+</div>
+
+<div class="content" id="tab3">
+  <h2>शब्द उदाहरण (Basic Words)</h2>
+  <div class="example">अ - अनार 🍎</div>
+  <div class="example">आ - आम 🥭</div>
+  <div class="example">इ - इमली 🌳</div>
+  <div class="example">ई - ईख 🌾</div>
+  <div class="example">उ - उल्लू 🦉</div>
+  <div class="example">क - कबूतर 🕊️</div>
+  <div class="example">ग - गमला 🪴</div>
+  <div class="example">न - नल 💧</div>
+</div>
+
+<script>
+  function showTab(index) {
+    const tabs = document.querySelectorAll(".tab");
+    const contents = document.querySelectorAll(".content");
+    tabs.forEach(tab => tab.classList.remove("active"));
+    contents.forEach(tab => tab.classList.remove("active"));
+    tabs[index].classList.add("active");
+    contents[index].classList.add("active");
+  }
+</script>
+
+</body>
+</html>

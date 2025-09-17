@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Full Language Learning Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .section {
+      background: #fff;
+      border-radius: 8px;
+      padding: 20px;
+      max-width: 800px;
+      margin: 20px auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      color: #2c3e50;
+      border-bottom: 2px solid #ddd;
+      padding-bottom: 5px;
+    }
+    form p, form li {
+      font-weight: bold;
+      margin-top: 20px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #result, #alphabetResult {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Language Mastery Quiz -->
+  <div class="section">
+    <h2>🧠 Language Mastery Quiz</h2>
+    <form id="fullQuiz">
+      <p>1. What is the correct basic sentence?</p>
+      <label><input type="radio" name="q1" value="a"> Eats cat food the.</label>
+      <label><input type="radio" name="q1" value="b"> The cat eats food.</label>
+      <label><input type="radio" name="q1" value="c"> Food the eats cat.</label>
+
+      <p>2. What is a noun?</p>
+      <label><input type="radio" name="q2" value="a"> A name of a person/place/thing</label>
+      <label><input type="radio" name="q2" value="b"> An action</label>
+      <label><input type="radio" name="q2" value="c"> A description</label>
+
+      <p>3. What is a verb?</p>
+      <label><input type="radio" name="q3" value="a"> A feeling</label>
+      <label><input type="radio" name="q3" value="b"> An action or doing word</label>
+      <label><input type="radio" name="q3" value="c"> A color</label>
+
+      <p>4. Which one is a correct intermediate sentence?</p>
+      <label><input type="radio" name="q4" value="a"> Football play they.</label>
+      <label><input type="radio" name="q4" value="b"> They play football every evening.</label>
+      <label><input type="radio" name="q4" value="c"> Play they football evening every.</label>
+
+      <p>5. “The big lion roared loudly.” – What type of word is “big”?</p>
+      <label><input type="radio" name="q5" value="a"> Noun</label>
+      <label><input type="radio" name="q5" value="b"> Verb</label>
+      <label><input type="radio" name="q5" value="c"> Adjective</label>
+
+      <p>6. What word goes with the letter “K”?</p>
+      <label><input type="radio" name="q6" value="a"> Kitten</label>
+      <label><input type="radio" name="q6" value="b"> King</label>
+      <label><input type="radio" name="q6" value="c"> Kite</label>
+
+      <p>7. Which object tells time?</p>
+      <label><input type="radio" name="q7" value="a"> Watch</label>
+      <label><input type="radio" name="q7" value="b"> Pen</label>
+      <label><input type="radio" name="q7" value="c"> Hat</label>
+
+      <p>8. “Although it was raining, they went out.” – This is:</p>
+      <label><input type="radio" name="q8" value="a"> Basic sentence</label>
+      <label><input type="radio" name="q8" value="b"> Intermediate sentence</label>
+      <label><input type="radio" name="q8" value="c"> Advanced sentence</label>
+
+      <p>9. “Pen, Hat, Watch” belong to which group?</p>
+      <label><input type="radio" name="q9" value="a"> Fruits</label>
+      <label><input type="radio" name="q9" value="b"> Animals</label>
+      <label><input type="radio" name="q9" value="c"> Objects</label>
+
+      <p>10. A ___ flies in the sky.</p>
+      <label><input type="radio" name="q10" value="a"> Kite</label>
+      <label><input type="radio" name="q10" value="b"> Fish</label>
+      <label><input type="radio" name="q10" value="c"> Goat</label>
+
+      <button type="button" onclick="checkFullQuiz()">Submit Quiz</button>
+      <p id="result"></p>
+    </form>
+  </div>
+
+  <!-- Alphabet Quiz -->
+  <div class="section">
+    <h2>🔠 Alphabet Quiz</h2>
+    <form id="alphabetQuiz">
+      <ol class="quiz-list">
+        <li>Which word starts with the letter <strong>C</strong>?<br>
+          <label><input type="radio" name="a1" value="Cat"> Cat</label>
+          <label><input type="radio" name="a1" value="Dog"> Dog</label>
+          <label><input type="radio" name="a1" value="Apple"> Apple</label>
+        </li>
+        <li>Which letter does the word <strong>Elephant</strong> start with?<br>
+          <label><input type="radio" name="a2" value="E"> E</label>
+          <label><input type="radio" name="a2" value="L"> L</label>
+          <label><input type="radio" name="a2" value="T"> T</label>
+        </li>
+        <li>Select the correct missing letter: <strong>B _ L L</strong><br>
+          <label><input type="radio" name="a3" value="A"> A</label>
+          <label><input type="radio" name="a3" value="E"> E</label>
+          <label><input type="radio" name="a3" value="O"> O</label>
+        </li>
+        <li>What comes after the letter <strong>J</strong>?<br>
+          <label><input type="radio" name="a4" value="K"> K</label>
+          <label><input type="radio" name="a4" value="L"> L</label>
+          <label><input type="radio" name="a4" value="I"> I</label>
+        </li>
+      </ol>
+      <button type="button" onclick="checkAlphabetQuiz()">Submit Alphabet Quiz</button>
+      <div id="alphabetResult"></div>
+    </form>
+  </div>
+
+  <!-- JavaScript for both quizzes -->
+  <script>
+  function checkFullQuiz() {
+    const answers = {
+      q1: 'b', q2: 'a', q3: 'b', q4: 'b', q5: 'c',
+      q6: 'c', q7: 'a', q8: 'c', q9: 'c', q10: 'a'
+    };
+    let score = 0;
+    
+    for (let key in answers) {
+      const options = document.getElementsByName(key);
+      options.forEach(option => {
+        // Reset styles
+        option.parentElement.style.color = '';
+        if (option.checked && option.value === answers[key]) {
+          score++;
+          option.parentElement.style.color = 'green';
+        } else if (option.value === answers[key]) {
+          option.parentElement.style.color = 'green';
+        } else if (option.checked && option.value !== answers[key]) {
+          option.parentElement.style.color = 'red';
+        }
+      });
+    }
+
+    const result = document.getElementById("result");
+    result.textContent = `You got ${score} out of 10 correct.`;
+    result.style.color = score === 10 ? 'green' : score >= 7 ? 'orange' : 'red';
+  }
+
+  function checkAlphabetQuiz() {
+    const answers = {
+      a1: 'Cat',
+      a2: 'E',
+      a3: 'A',
+      a4: 'K'
+    };
+    let score = 0;
+
+    for (let key in answers) {
+      const options = document.getElementsByName(key);
+      options.forEach(option => {
+        // Reset styles
+        option.parentElement.style.color = '';
+        if (option.checked && option.value === answers[key]) {
+          score++;
+          option.parentElement.style.color = 'green';
+        } else if (option.value === answers[key]) {
+          option.parentElement.style.color = 'green';
+        } else if (option.checked && option.value !== answers[key]) {
+          option.parentElement.style.color = 'red';
+        }
+      });
+    }
+
+    const result = document.getElementById("alphabetResult");
+    result.textContent = `You got ${score} out of 4 correct.`;
+    result.style.color = score === 4 ? 'green' : score >= 2 ? 'orange' : 'red';
+  }
+</script>
+
+</body>
+</html>

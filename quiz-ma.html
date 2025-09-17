@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Math Operations & Tables Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #eef6ff;
+      padding: 20px;
+    }
+    .quiz-container {
+      background: white;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-container">
+    <h2>🧮 Math Operations & Tables Quiz</h2>
+    <form id="mathQuiz">
+      
+      <p>1. What is 8 + 5?</p>
+      <label><input type="radio" name="q1" value="12"> 12</label>
+      <label><input type="radio" name="q1" value="13"> 13</label>
+      <label><input type="radio" name="q1" value="14"> 14</label>
+
+      <p>2. What is 15 − 6?</p>
+      <label><input type="radio" name="q2" value="9"> 9</label>
+      <label><input type="radio" name="q2" value="10"> 10</label>
+      <label><input type="radio" name="q2" value="11"> 11</label>
+
+      <p>3. What is 7 × 6?</p>
+      <label><input type="radio" name="q3" value="42"> 42</label>
+      <label><input type="radio" name="q3" value="36"> 36</label>
+      <label><input type="radio" name="q3" value="48"> 48</label>
+
+      <p>4. What is 36 ÷ 6?</p>
+      <label><input type="radio" name="q4" value="5"> 5</label>
+      <label><input type="radio" name="q4" value="6"> 6</label>
+      <label><input type="radio" name="q4" value="7"> 7</label>
+
+      <p>5. What is the 9th number in 5 times table?</p>
+      <label><input type="radio" name="q5" value="45"> 45</label>
+      <label><input type="radio" name="q5" value="40"> 40</label>
+      <label><input type="radio" name="q5" value="35"> 35</label>
+
+      <p>6. What is the result of 4 × 8?</p>
+      <label><input type="radio" name="q6" value="36"> 36</label>
+      <label><input type="radio" name="q6" value="32"> 32</label>
+      <label><input type="radio" name="q6" value="28"> 28</label>
+
+      <p>7. What is 100 − 75?</p>
+      <label><input type="radio" name="q7" value="20"> 20</label>
+      <label><input type="radio" name="q7" value="25"> 25</label>
+      <label><input type="radio" name="q7" value="30"> 30</label>
+
+      <p>8. What is 10 ÷ 2?</p>
+      <label><input type="radio" name="q8" value="4"> 4</label>
+      <label><input type="radio" name="q8" value="5"> 5</label>
+      <label><input type="radio" name="q8" value="6"> 6</label>
+
+      <button type="button" onclick="checkQuiz()">Submit Quiz</button>
+      <div id="result"></div>
+
+    </form>
+  </div>
+
+  <script>
+    function checkQuiz() {
+      const answers = {
+        q1: '13',
+        q2: '9',
+        q3: '42',
+        q4: '6',
+        q5: '45',
+        q6: '32',
+        q7: '25',
+        q8: '5'
+      };
+
+      let score = 0;
+
+      for (let key in answers) {
+        const options = document.getElementsByName(key);
+        options.forEach(option => {
+          option.parentElement.style.color = '';
+          if (option.checked && option.value === answers[key]) {
+            score++;
+            option.parentElement.style.color = 'green';
+          } else if (option.value === answers[key]) {
+            option.parentElement.style.color = 'green';
+          } else if (option.checked && option.value !== answers[key]) {
+            option.parentElement.style.color = 'red';
+          }
+        });
+      }
+
+      const result = document.getElementById("result");
+      result.innerHTML = `You got <strong>${score} / 8</strong> correct.`;
+      result.style.color = score === 8 ? 'green' : score >= 5 ? 'orange' : 'red';
+    }
+  </script>
+
+</body>
+</html>

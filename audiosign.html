@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Audio Signature Generator</title>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+    }
+    .signature-section {
+      padding: 40px 20px;
+      background-color: #fff;
+      text-align: center;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+    }
+    .recording-controls button {
+      padding: 10px 15px;
+      margin: 5px;
+      background: #3498db;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .recording-controls button:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+    .microphone-icon {
+      font-size: 40px;
+      color: #e74c3c;
+      cursor: pointer;
+    }
+    .microphone-icon.recording {
+      animation: pulse 1s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+      100% { transform: scale(1); }
+    }
+    #waveform {
+      margin-top: 20px;
+      background: #ddd;
+      border-radius: 8px;
+    }
+    #signatureResult {
+      margin-top: 20px;
+      font-size: 18px;
+      font-family: monospace;
+      color: #2c3e50;
+      background: #e8f0ff;
+      padding: 12px;
+      border-radius: 6px;
+    }
+  </style>
+</head>
+<body>
+
+<section class="signature-section">
+  <div class="container">
+    <h2>Audio Signature Generator</h2>
+    <p>Speak your name clearly — signature will be generated based on your voice</p>
+
+    <div class="signature-tool">
+      <div class="recording-area">
+        <div class="microphone-icon" id="micIcon">
+          <i class="fas fa-microphone"></i>
+        </div>
+        <p id="recordingStatus">Click microphone to start recording</p>
+        <div class="recording-controls">
+          <button id="recordBtn">Start</button>
+          <button id="stopBtn" disabled>Stop</button>
+          <button id="playBtn" disabled>Play</button>
+          <button id="generateBtn" disabled>Generate Signature</button>
+        </div>
+      </div>
+      <div id="waveform"></div>
+      <div id="signatureResult"></div>
+    </div>
+  </div>
+</section>
+
+<script>
+  let mediaRecorder, audioChunks = [], recordedBlob, waveSurfer;
+  const micIcon = document.getElementById('micIcon');
+  const recordBtn = document.getElementById('recordBtn');
+  const stopBtn = document.getElementById('stopBtn');
+  const playBtn = document.getElementById('playBtn');
+  const generateBtn = document.getElementById('generateBtn');
+  const recordingStatus = document.getElementById('recordingStatus');
+  const signatureResult = document.getElementById('signatureResult');
+
+  micIcon.onclick = () => {
+    if (recordBtn.disabled) stopBtn.click();
+    else recordBtn.click();
+  };
+
+  recordBtn.onclick = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+
+      mediaRecorder.ondataavailable = e => {
+        if (e.data.size > 0) audioChunks.push(e.data);
+      };
+
+      mediaRecorder.onstop = () => {
+        recordedBlob = new Blob(audioChunks, { type: 'audio/webm' });
+        const audioURL = URL.createObjectURL(recordedBlob);
+        waveSurfer.load(audioURL);
+        playBtn.disabled = false;
+        generateBtn.disabled = false;
+      };
+
+      mediaRecorder.start();
+      micIcon.classList.add('recording');
+      recordingStatus.textContent = "🎙️ Recording...";
+      recordBtn.disabled = true;
+      stopBtn.disabled = false;
+      playBtn.disabled = true;
+      generateBtn.disabled = true;
+      signatureResult.textContent = '';
+    } catch (err) {
+      alert("Microphone access denied or not supported.");
+    }
+  };
+
+  stopBtn.onclick = () => {
+    if (mediaRecorder && mediaRecorder.state === 'recording') {
+      mediaRecorder.stop();
+      recordingStatus.textContent = "Recording stopped. Ready to generate signature.";
+      micIcon.classList.remove('recording');
+      recordBtn.disabled = false;
+      stopBtn.disabled = true;
+    }
+  };
+
+  playBtn.onclick = () => waveSurfer.playPause();
+
+  generateBtn.onclick = () => {
+    if (!recordedBlob) return;
+
+    // Simulate "manual pitch-based" signature
+    const reader = new FileReader();
+    reader.readAsArrayBuffer(recordedBlob);
+    reader.onloadend = () => {
+      const audioContext = new AudioContext();
+      audioContext.decodeAudioData(reader.result, buffer => {
+        const rawData = buffer.getChannelData(0); // mono
+        let peak = 0;
+        let peakIndex = 0;
+        for (let i = 0; i < rawData.length; i++) {
+          if (Math.abs(rawData[i]) > peak) {
+            peak = Math.abs(rawData[i]);
+            peakIndex = i;
+          }
+        }
+
+        const timeInSec = (peakIndex / buffer.sampleRate).toFixed(2);
+        const manualName = "Your Voice";
+
+        // Generate fake signature like: SIG-SR-HIGH-1.25s
+        const signature = `SIG-${manualName.replace(/\s/g, '').toUpperCase()}-PITCH@${timeInSec}s`;
+
+        signatureResult.textContent = `🖊️ Signature: ${signature}`;
+      });
+    };
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    waveSurfer = WaveSurfer.create({
+      container: "#waveform",
+      waveColor: "#3498db",
+      progressColor: "#2ecc71",
+      height: 100
+    });
+  });
+</script>
+
+</body>
+</html>

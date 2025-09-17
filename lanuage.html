@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Educational Resources</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f6f8;
+      color: #333;
+    }
+    header {
+      background-color: #2c3e50;
+      padding: 20px;
+      color: white;
+      text-align: center;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .btn-group {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    .btn {
+      background-color: #3498db;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      margin: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .btn:hover {
+      background-color: #2980b9;
+    }
+    .language-select {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    select {
+      padding: 8px;
+      font-size: 16px;
+    }
+    .subject-content {
+      display: none;
+      margin-bottom: 40px;
+    }
+    .subject-content h2 {
+      color: #2c3e50;
+    }
+    .video-card {
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      height: 315px;
+      border: none;
+    }
+    .info-text {
+      margin: 10px 0 20px;
+      font-size: 16px;
+      line-height: 1.6;
+      color: #555;
+    }
+    .action-links {
+      margin-top: 15px;
+    }
+    .action-links a {
+      background-color: #27ae60;
+      color: white;
+      padding: 10px 15px;
+      border-radius: 4px;
+      margin-right: 10px;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .action-links a:hover {
+      background-color: #1e8449;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1 id="pageTitle">📚 Educational Resources</h1>
+    <p id="pageSubtitle">Learn at your own pace with handpicked video content and quizzes</p>
+  </header>
+
+  <div class="container">
+    <!-- Language Selector -->
+    <div class="language-select">
+      <label for="language" id="langLabel">Select Language: </label>
+      <select id="language" onchange="changeLanguage()">
+        <option value="en">English</option>
+        <option value="te">తెలుగు</option>
+        <option value="hi">हिन्दी</option>
+      </select>
+    </div>
+
+    <!-- Subject Buttons -->
+    <div class="btn-group">
+      <button class="btn" id="btnEnglish" onclick="showSubject('english')">English</button>
+      <button class="btn" id="btnTelugu" onclick="showSubject('telugu')">Telugu</button>
+      <button class="btn" id="btnMath" onclick="showSubject('math')">Mathematics</button>
+      <button class="btn" id="btnHindi" onclick="showSubject('hindi')">Hindi</button>
+      <button class="btn" id="btnGK" onclick="showSubject('gk')">General Knowledge</button>
+    </div>
+
+    <!-- English Section -->
+    <div class="subject-content" id="english">
+      <h2 id="englishTitle">🗣️ English Language</h2>
+      <p class="info-text" id="englishDesc">
+        Learn basic English communication, grammar, and pronunciation with easy-to-understand videos.
+      </p>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/7fAJ13DgvYM" allowfullscreen></iframe>
+        <p>English Alphabets</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/lTV9r8N1UI8" allowfullscreen></iframe>
+        <p>Alphabet Pronunciations</p>
+      </div>
+      <div class="action-links">
+        <a href="english.html" id="englishContentLink">English Content</a>
+        <a href="quiz-en.html" id="englishQuizLink">Take Quiz</a>
+      </div>
+    </div>
+
+    <!-- Telugu Section -->
+    <div class="subject-content" id="telugu">
+      <h2 id="teluguTitle">📝 Telugu Language</h2>
+      <p class="info-text" id="teluguDesc">
+        Explore Telugu alphabets, Guninthalu, and basic language rules through visual lessons.
+      </p>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/h8M8TsK47oU" allowfullscreen></iframe>
+        <p>Telugu Alphabet</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/o719xJL76dU" allowfullscreen></iframe>
+        <p>Guninthalu (Vowel Modifiers)</p>
+      </div>
+      <div class="action-links">
+        <a href="telugucontent.html" id="teluguContentLink">Telugu Content</a>
+        <a href="telugu.html" id="teluguContentLink">Telugu Quiz</a>
+
+      </div>
+    </div>
+
+    <!-- Math Section -->
+    <div class="subject-content" id="math">
+      <h2 id="mathTitle">➕ Mathematics</h2>
+      <p class="info-text" id="mathDesc">
+        Strengthen your basics with addition, subtraction, multiplication tables, and number systems.
+      </p>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/hsIeeN2bLaA" allowfullscreen></iframe>
+        <p>Basic Math Concepts</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/4T1BXxKbI-o" allowfullscreen></iframe>
+        <p>Multiplication Tables</p>
+      </div>
+      <div class="action-links">
+        <a href="maths.html" id="mathContentLink">Math Content</a>
+        <a href="quiz-ma.html" id="mathQuizLink">Maths Quiz</a>
+      </div>
+    </div>
+
+    <!-- Hindi Section -->
+    <div class="subject-content" id="hindi">
+      <h2 id="hindiTitle">🧮 Hindi Language</h2>
+      <p class="info-text" id="hindiDesc">
+        Learn Hindi alphabets and basic math in Hindi.
+      </p>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/DvnryBHngtc" allowfullscreen></iframe>
+        <p>Hindi Alphabets & Basics</p>
+      </div>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/videoseries?list=PLdS7hDsjMIHspuLIjwWKnKiFzp_Dc-8i3" allowfullscreen></iframe>
+        <p>Hindi Learning Playlist</p>
+      </div>
+      <div class="action-links">
+        <a href="hindidata.html" id="hindiContentLink">Hindi Content</a>
+        <a href="hindiquiz.html" id="hindiQuizLink">Hindi Quiz</a>
+      </div>
+    </div>
+
+    <!-- GK Section -->
+    <div class="subject-content" id="gk">
+      <h2 id="gkTitle">🌍 General Knowledge</h2>
+      <p class="info-text" id="gkDesc">
+        Stay informed with essential general knowledge: geography, science, history, and more.
+      </p>
+      <div class="video-card">
+        <iframe src="https://www.youtube.com/embed/Yocja_N5s1I" allowfullscreen></iframe>
+        <p>GK: Introduction</p>
+      </div>
+    </div>
+  </div>
+<script>
+  // All page translations
+  const translations = {
+    en: {
+      pageTitle: "📚 Educational Resources",
+      pageSubtitle: "Learn at your own pace with handpicked video content and quizzes",
+      langLabel: "Select Language:",
+      btnEnglish: "English",
+      btnTelugu: "Telugu",
+      btnMath: "Mathematics",
+      btnHindi: "Hindi",
+      btnGK: "General Knowledge",
+
+      englishTitle: "🗣️ English Language",
+      englishDesc: "Learn basic English communication, grammar, and pronunciation with easy-to-understand videos.",
+      englishContentLink: "English Content",
+      englishQuizLink: "Take Quiz",
+
+      teluguTitle: "📝 Telugu Language",
+      teluguDesc: "Explore Telugu alphabets, Guninthalu, and basic language rules through visual lessons.",
+      teluguContentLink: "Telugu Content",
+      teluguQuizLink: "Telugu Quiz",
+
+      mathTitle: "➕ Mathematics",
+      mathDesc: "Strengthen your basics with addition, subtraction, multiplication tables, and number systems.",
+      mathContentLink: "Math Content",
+      mathQuizLink: "Maths Quiz",
+
+      hindiTitle: "🧮 Hindi Language",
+      hindiDesc: "Learn Hindi alphabets and basic math in Hindi.",
+      hindiContentLink: "Hindi Content",
+      hindiQuizLink: "Hindi Quiz",
+
+      gkTitle: "🌍 General Knowledge",
+      gkDesc: "Stay informed with essential general knowledge: geography, science, history, and more."
+    },
+    te: {
+      pageTitle: "📚 విద్యా వనరులు",
+      pageSubtitle: "మీ సొంత వేగంతో ఎంచుకున్న వీడియో కంటెంట్ మరియు క్విజ్‌లతో నేర్చుకోండి",
+      langLabel: "భాష ఎంచుకోండి:",
+      btnEnglish: "ఇంగ్లీష్",
+      btnTelugu: "తెలుగు",
+      btnMath: "గణితశాస్త్రం",
+      btnHindi: "హిందీ",
+      btnGK: "సామాన్య జ్ఞానం",
+
+      englishTitle: "🗣️ ఇంగ్లీష్ భాష",
+      englishDesc: "సులభంగా అర్థమయ్యే వీడియోలతో ఇంగ్లీష్ కమ్యూనికేషన్, వ్యాకరణం మరియు ఉచ్చారణ నేర్చుకోండి.",
+      englishContentLink: "ఇంగ్లీష్ కంటెంట్",
+      englishQuizLink: "క్విజ్ తీసుకోండి",
+
+      teluguTitle: "📝 తెలుగు భాష",
+      teluguDesc: "తెలుగు అక్షరాలు, గుణింతాలు మరియు ప్రాథమిక నియమాలను విజువల్ పాఠాలతో అన్వేషించండి.",
+      teluguContentLink: "తెలుగు కంటెంట్",
+      teluguQuizLink: "తెలుగు క్విజ్",
+
+      mathTitle: "➕ గణితశాస్త్రం",
+      mathDesc: "లెక్కలు, తీసివేతలు, గుణాకార పట్టికలు మరియు సంఖ్యా వ్యవస్థల్లో మీ పునాది బలపరచండి.",
+      mathContentLink: "గణితం కంటెంట్",
+      mathQuizLink: "గణితం క్విజ్",
+
+      hindiTitle: "🧮 హిందీ భాష",
+      hindiDesc: "హిందీ అక్షరమాల మరియు ప్రాథమిక గణితం నేర్చుకోండి.",
+      hindiContentLink: "హిందీ కంటెంట్",
+      hindiQuizLink: "హిందీ క్విజ్",
+
+      gkTitle: "🌍 సాధారణ జ్ఞానం",
+      gkDesc: "భూగోళ శాస్త్రం, విజ్ఞానం, చరిత్ర మరియు మరిన్నింటితో అనివార్యమైన సాధారణ జ్ఞానాన్ని పొందండి."
+    },
+    hi: {
+      pageTitle: "📚 शैक्षिक संसाधन",
+      pageSubtitle: "चुने हुए वीडियो सामग्री और क्विज़ के साथ अपनी गति से सीखें",
+      langLabel: "भाषा चुनें:",
+      btnEnglish: "अंग्रेज़ी",
+      btnTelugu: "तेलुगु",
+      btnMath: "गणित",
+      btnHindi: "हिन्दी",
+      btnGK: "सामान्य ज्ञान",
+
+      englishTitle: "🗣️ अंग्रेज़ी भाषा",
+      englishDesc: "आसानी से समझ आने वाले वीडियो के साथ अंग्रेज़ी संचार, व्याकरण और उच्चारण सीखें।",
+      englishContentLink: "अंग्रेज़ी सामग्री",
+      englishQuizLink: "क्विज़ लें",
+
+      teluguTitle: "📝 तेलुगु भाषा",
+      teluguDesc: "तेलुगु वर्णमाला, गुणिताक्षर और बुनियादी नियमों को दृश्य पाठों के माध्यम से जानें।",
+      teluguContentLink: "तेलुगु सामग्री",
+      teluguQuizLink: "तेलुगु क्विज़",
+
+      mathTitle: "➕ गणित",
+      mathDesc: "जोड़, घटाव, गुणा तालिकाएं और संख्या प्रणाली में अपनी नींव मजबूत करें।",
+      mathContentLink: "गणित सामग्री",
+      mathQuizLink: "गणित क्विज़",
+
+      hindiTitle: "🧮 हिन्दी भाषा",
+      hindiDesc: "हिन्दी वर्णमाला और बुनियादी गणित सीखें।",
+      hindiContentLink: "हिन्दी सामग्री",
+      hindiQuizLink: "हिन्दी क्विज़",
+
+      gkTitle: "🌍 सामान्य ज्ञान",
+      gkDesc: "भूगोल, विज्ञान, इतिहास और अन्य में आवश्यक सामान्य ज्ञान प्राप्त करें।"
+    }
+  };
+
+  function changeLanguage() {
+    const lang = document.getElementById("language").value;
+    const t = translations[lang];
+
+    for (const key in t) {
+      const el = document.getElementById(key);
+      if (el) el.textContent = t[key];
+    }
+  }
+
+  function showSubject(id) {
+    document.querySelectorAll('.subject-content').forEach(s => s.style.display = 'none');
+    document.getElementById(id).style.display = 'block';
+  }
+
+  window.onload = () => {
+    showSubject('english');
+    changeLanguage();
+  };
+</script>

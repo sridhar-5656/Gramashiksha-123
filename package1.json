@@ -1,0 +1,9 @@
+{
+  "name": "user-auth-project",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "signup.js",
+  "scripts": {
+    "start": "node signup.js"
+  }
+}

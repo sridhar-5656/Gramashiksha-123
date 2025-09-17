@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>हिंदी वर्णमाला क्विज</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f2f2f2;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    h1 {
+      text-align: center;
+      color: #b22222;
+    }
+
+    .quiz-box {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .question {
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .option {
+      margin: 5px 0;
+    }
+
+    .submit-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #b22222;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .submit-btn:hover {
+      background-color: #8b0000;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: green;
+    }
+
+    .correct-answer {
+      color: #006400;
+      font-size: 14px;
+      margin-top: 3px;
+    }
+
+    .wrong-answer {
+      color: red;
+    }
+
+    .answer-section {
+      margin-top: 10px;
+      background: #f9f9f9;
+      padding: 10px;
+      border-left: 4px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>हिंदी वर्णमाला क्विज</h1>
+
+  <div class="quiz-box" id="quiz"></div>
+
+  <button class="submit-btn" onclick="submitQuiz()">सबमिट करें</button>
+
+  <div id="result"></div>
+
+  <script>
+    const quizData = [
+      {
+        question: "1. पहला स्वर कौन सा है?",
+        options: ["अ", "आ", "इ", "ए"],
+        answer: "अ"
+      },
+      {
+        question: "2. 'क' किस प्रकार का वर्ण है?",
+        options: ["स्वर", "व्यंजन", "संयुक्त", "अनुस्वार"],
+        answer: "व्यंजन"
+      },
+      {
+        question: "3. इनमें से कौन सा स्वर नहीं है?",
+        options: ["इ", "उ", "ज", "ओ"],
+        answer: "ज"
+      },
+      {
+        question: "4. 'ल' के बाद कौन आता है?",
+        options: ["व", "श", "ळ", "म"],
+        answer: "ळ"
+      },
+      {
+        question: "5. 'फल' शब्द में कितने वर्ण हैं?",
+        options: ["1", "2", "3", "4"],
+        answer: "2"
+      },
+      {
+        question: "6. 'बच्चा' शब्द में कौन सा व्यंजन दो बार आता है?",
+        options: ["ब", "च", "क", "छ"],
+        answer: "च"
+      },
+      {
+        question: "7. इनमें से कौन सा शब्द रंग है?",
+        options: ["नदी", "लाल", "पेड़", "खिड़की"],
+        answer: "लाल"
+      },
+      {
+        question: "8. 'गाय' शब्द में पहला वर्ण कौन सा है?",
+        options: ["ग", "य", "ा", "गा"],
+        answer: "ग"
+      },
+      {
+        question: "9. इनमें से कौन-सा व्यंजन है?",
+        options: ["आ", "अ", "क", "ई"],
+        answer: "क"
+      },
+      {
+        question: "10. 'सूरज' शब्द में कितने वर्ण हैं?",
+        options: ["2", "3", "4", "5"],
+        answer: "3"
+      }
+    ];
+
+    const quizBox = document.getElementById("quiz");
+
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.classList.add("question-block");
+
+      let html = `<div class="question">${q.question}</div>`;
+
+      q.options.forEach(option => {
+        html += `
+          <div class="option">
+            <label>
+              <input type="radio" name="q${index}" value="${option}">
+              ${option}
+            </label>
+          </div>`;
+      });
+
+      html += `<div class="answer-section" id="answer${index}" style="display: none;"></div>`;
+      questionDiv.innerHTML = html;
+      quizBox.appendChild(questionDiv);
+    });
+
+    function submitQuiz() {
+      let score = 0;
+
+      quizData.forEach((q, index) => {
+        const options = document.getElementsByName(`q${index}`);
+        let selected = null;
+        options.forEach(option => {
+          if (option.checked) selected = option.value;
+        });
+
+        const answerSection = document.getElementById(`answer${index}`);
+        answerSection.style.display = "block";
+
+        if (selected === q.answer) {
+          score++;
+          answerSection.innerHTML = `<span class="correct-answer">✅ सही उत्तर!</span>`;
+        } else {
+          answerSection.innerHTML = `<span class="wrong-answer">❌ गलत उत्तर</span><br>
+                                     <span class="correct-answer">✔️ सही उत्तर: ${q.answer}</span>`;
+        }
+      });
+
+      document.getElementById("result").innerText = `आपका स्कोर: ${score} / ${quizData.length}`;
+    }
+  </script>
+</body>
+</html>

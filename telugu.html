@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8">
+  <title>తెలుగు వర్ణమాల & గుణింతాలు క్విజ్</title>
+  <style>
+    body {
+      font-family: 'Noto Sans Telugu', Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      direction: ltr;
+    }
+    .quiz-section {
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      max-width: 700px;
+      margin: auto;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+    label {
+      display: block;
+      margin: 5px 0;
+      cursor: pointer;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #2980b9;
+    }
+    #result {
+      font-weight: bold;
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="quiz-section">
+    <h2>📘 తెలుగు వర్ణమాల & గుణింతాలు క్విజ్</h2>
+    <form id="teluguQuiz">
+      <p>1. "ఋ" ఎలాంటి అక్షరం?</p>
+      <label><input type="radio" name="q1" value="Achulu"> అచ్చు</label>
+      <label><input type="radio" name="q1" value="Hallulu"> హల్లు</label>
+      <label><input type="radio" name="q1" value="Sanyuktam"> సంయుక్తాక్షరం</label>
+
+      <p>2. "క" ఎలాంటి అక్షరం?</p>
+      <label><input type="radio" name="q2" value="Achulu"> అచ్చు</label>
+      <label><input type="radio" name="q2" value="Hallulu"> హల్లు</label>
+      <label><input type="radio" name="q2" value="Sanyuktam"> సంయుక్తాక్షరం</label>
+
+      <p>3. "క్ + అ = క" ఇది ఏ విభాగానికి చెందింది?</p>
+      <label><input type="radio" name="q3" value="Gunintam"> గుణింతం</label>
+      <label><input type="radio" name="q3" value="Achulu"> అచ్చు</label>
+      <label><input type="radio" name="q3" value="Hallulu"> హల్లు</label>
+
+      <p>4. "క్ష" అనే అక్షరం ఏ కేటగిరీకి చెందుతుంది?</p>
+      <label><input type="radio" name="q4" value="Sanyuktam"> సంయుక్తాక్షరం</label>
+      <label><input type="radio" name="q4" value="Achulu"> అచ్చు</label>
+      <label><input type="radio" name="q4" value="Gunintam"> గుణింతం</label>
+
+      <p>5. "కా" అనే అక్షరం ఎలా తయారవుతుంది?</p>
+      <label><input type="radio" name="q5" value="Ka+Aa"> క్ + ఆ</label>
+      <label><input type="radio" name="q5" value="Ka+I"> క్ + ఇ</label>
+      <label><input type="radio" name="q5" value="Ka+U"> క్ + ఉ</label>
+
+      <button type="button" onclick="checkTeluguQuiz()">Submit Quiz</button>
+      <div id="result"></div>
+    </form>
+  </div>
+
+  <script>
+    function checkTeluguQuiz() {
+      const answers = {
+        q1: 'Achulu',
+        q2: 'Hallulu',
+        q3: 'Gunintam',
+        q4: 'Sanyuktam',
+        q5: 'Ka+Aa'
+      };
+      let score = 0;
+
+      for (let key in answers) {
+        const options = document.getElementsByName(key);
+        options.forEach(option => {
+          option.parentElement.style.color = '';
+          if (option.checked && option.value === answers[key]) {
+            score++;
+            option.parentElement.style.color = 'green';
+          } else if (option.value === answers[key]) {
+            option.parentElement.style.color = 'green';
+          } else if (option.checked && option.value !== answers[key]) {
+            option.parentElement.style.color = 'red';
+          }
+        });
+      }
+
+      const result = document.getElementById("result");
+      result.innerHTML = `మీరు <strong>${score} / 5</strong> సరైన సమాధానాలు ఇచ్చారు.`;
+      result.style.color = score === 5 ? 'green' : score >= 3 ? 'orange' : 'red';
+    }
+  </script>
+
+</body>
+</html>

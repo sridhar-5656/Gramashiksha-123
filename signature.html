@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Audio Signature Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .language-selector {
+            margin-bottom: 30px;
+        }
+
+        .language-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .lang-btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 25px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .lang-btn.active {
+            background: linear-gradient(45deg, #764ba2, #667eea);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-section {
+            margin-bottom: 30px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e1e5e9;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        input[type="text"]:focus, textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 50px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+        }
+
+        .btn-danger {
+            background: linear-gradient(45deg, #f44336, #d32f2f);
+            color: white;
+        }
+
+        .btn-download {
+            background: linear-gradient(45deg, #FF9800, #F57C00);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .signature-preview {
+            background: rgba(255, 255, 255, 0.9);
+            border: 2px dashed #667eea;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            min-height: 200px;
+            text-align: center;
+            position: relative;
+        }
+
+        .signature-canvas {
+            width: 100%;
+            max-width: 600px;
+            height: 150px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            background: white;
+            margin: 0 auto;
+        }
+
+        .audio-controls {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .audio-player {
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .wave-animation {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 3px;
+            height: 40px;
+            margin: 15px 0;
+        }
+
+        .wave-bar {
+            width: 4px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 2px;
+            animation: wave 1s ease-in-out infinite;
+        }
+
+        .wave-bar:nth-child(1) { height: 10px; animation-delay: 0s; }
+        .wave-bar:nth-child(2) { height: 20px; animation-delay: 0.1s; }
+        .wave-bar:nth-child(3) { height: 30px; animation-delay: 0.2s; }
+        .wave-bar:nth-child(4) { height: 25px; animation-delay: 0.3s; }
+        .wave-bar:nth-child(5) { height: 35px; animation-delay: 0.4s; }
+        .wave-bar:nth-child(6) { height: 20px; animation-delay: 0.5s; }
+        .wave-bar:nth-child(7) { height: 15px; animation-delay: 0.6s; }
+
+        @keyframes wave {
+            0%, 100% { transform: scaleY(1); }
+            50% { transform: scaleY(0.3); }
+        }
+
+        .status {
+            text-align: center;
+            margin: 15px 0;
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .controls {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 100%;
+                max-width: 300px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 id="main-title">Audio Signature Generator</h1>
+            <p id="subtitle">Create personalized audio signatures in multiple languages</p>
+        </div>
+
+        <div class="language-selector">
+            <div class="language-buttons">
+                <button class="lang-btn active" data-lang="en">English</button>
+                <button class="lang-btn" data-lang="hi">हिंदी</button>
+                <button class="lang-btn" data-lang="te">తెలుగు</button>
+            </div>
+        </div>
+
+        <div class="input-section">
+            <div class="input-group">
+                <label for="name" id="name-label">Your Name</label>
+                <input type="text" id="name" placeholder="Enter your name">
+            </div>
+            <div class="input-group">
+                <label for="text" id="text-label">Signature Text</label>
+                <textarea id="text" placeholder="Enter the text for your signature"></textarea>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button class="btn btn-primary" id="generate-btn">
+                🎯 <span id="generate-text">Generate Signature</span>
+            </button>
+            <button class="btn btn-secondary" id="play-btn" disabled>
+                ▶️ <span id="play-text">Play Audio</span>
+            </button>
+            <button class="btn btn-danger" id="reset-btn">
+                🔄 <span id="reset-text">Reset</span>
+            </button>
+            <button class="btn btn-download" id="download-btn" disabled>
+                📥 <span id="download-text">Download Signature</span>
+            </button>
+        </div>
+
+        <div class="signature-preview">
+            <canvas class="signature-canvas" id="signature-canvas"></canvas>
+            <div class="status" id="status">Ready to generate signature</div>
+        </div>
+
+        <div class="audio-controls">
+            <audio class="audio-player" id="audio-player" controls style="display: none;"></audio>
+            <div class="wave-animation hidden" id="wave-animation">
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+                <div class="wave-bar"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Multi-language support
+        const translations = {
+            en: {
+                title: "Audio Signature Generator",
+                subtitle: "Create personalized audio signatures in multiple languages",
+                nameLabel: "Your Name",
+                textLabel: "Signature Text",
+                namePlaceholder: "Enter your name",
+                textPlaceholder: "Enter the text for your signature",
+                generateText: "Generate Signature",
+                playText: "Play Audio",
+                resetText: "Reset",
+                downloadText: "Download Signature",
+                statusReady: "Ready to generate signature",
+                statusGenerating: "Generating signature...",
+                statusGenerated: "Signature generated successfully!",
+                statusPlaying: "Playing audio...",
+                voice: "en-US"
+            },
+            hi: {
+                title: "ऑडियो सिग्नेचर जेनरेटर",
+                subtitle: "कई भाषाओं में व्यक्तिगत ऑडियो सिग्नेचर बनाएं",
+                nameLabel: "आपका नाम",
+                textLabel: "सिग्नेचर टेक्स्ट",
+                namePlaceholder: "अपना नाम दर्ज करें",
+                textPlaceholder: "अपने सिग्नेचर के लिए टेक्स्ट दर्ज करें",
+                generateText: "सिग्नेचर बनाएं",
+                playText: "ऑडियो चलाएं",
+                resetText: "रीसेट करें",
+                downloadText: "सिग्नेचर डाउनलोड करें",
+                statusReady: "सिग्नेचर बनाने के लिए तैयार",
+                statusGenerating: "सिग्नेचर बनाया जा रहा है...",
+                statusGenerated: "सिग्नेचर सफलतापूर्वक बनाया गया!",
+                statusPlaying: "ऑडियो चल रहा है...",
+                voice: "hi-IN"
+            },
+            te: {
+                title: "ఆడియో సిగ్నేచర్ జెనరేటర్",
+                subtitle: "అనేక భాషలలో వ్యక్తిగత ఆడియో సిగ్నేచర్లను సృష్టించండి",
+                nameLabel: "మీ పేరు",
+                textLabel: "సిగ్నేచర్ టెక్స్ట్",
+                namePlaceholder: "మీ పేరును నమోదు చేయండి",
+                textPlaceholder: "మీ సిగ్నేచర్ కోసం టెక్స్ట్ నమోదు చేయండి",
+                generateText: "సిగ్నేచర్ సృష్టించండి",
+                playText: "ఆడియో ప్లే చేయండి",
+                resetText: "రీసెట్ చేయండి",
+                downloadText: "సిగ్నేచర్ డౌన్‌లోడ్ చేయండి",
+                statusReady: "సిగ్నేచర్ సృష్టించడానికి సిద్ధంగా ఉంది",
+                statusGenerating: "సిగ్నేచర్ సృష్టిస్తోంది...",
+                statusGenerated: "సిగ్నేచర్ విజయవంతంగా సృష్టించబడింది!",
+                statusPlaying: "ఆడియో ప్లే అవుతోంది...",
+                voice: "te-IN"
+            }
+        };
+
+        let currentLang = 'en';
+        let currentAudio = null;
+        let signatureGenerated = false;
+
+        // DOM elements
+        const langButtons = document.querySelectorAll('.lang-btn');
+        const nameInput = document.getElementById('name');
+        const textInput = document.getElementById('text');
+        const generateBtn = document.getElementById('generate-btn');
+        const playBtn = document.getElementById('play-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const canvas = document.getElementById('signature-canvas');
+        const ctx = canvas.getContext('2d');
+        const audioPlayer = document.getElementById('audio-player');
+        const waveAnimation = document.getElementById('wave-animation');
+        const status = document.getElementById('status');
+
+        // Initialize canvas
+        function initCanvas() {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        // Language switching
+        langButtons.forEach(btn => {
+            btn.addEventListener('click', () => {
+                langButtons.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentLang = btn.dataset.lang;
+                updateLanguage();
+            });
+        });
+
+        function updateLanguage() {
+            const trans = translations[currentLang];
+            document.getElementById('main-title').textContent = trans.title;
+            document.getElementById('subtitle').textContent = trans.subtitle;
+            document.getElementById('name-label').textContent = trans.nameLabel;
+            document.getElementById('text-label').textContent = trans.textLabel;
+            nameInput.placeholder = trans.namePlaceholder;
+            textInput.placeholder = trans.textPlaceholder;
+            document.getElementById('generate-text').textContent = trans.generateText;
+            document.getElementById('play-text').textContent = trans.playText;
+            document.getElementById('reset-text').textContent = trans.resetText;
+            document.getElementById('download-text').textContent = trans.downloadText;
+            status.textContent = trans.statusReady;
+        }
+
+        // Generate signature
+        generateBtn.addEventListener('click', generateSignature);
+
+        function generateSignature() {
+            const name = nameInput.value.trim();
+            const text = textInput.value.trim();
+
+            if (!name || !text) {
+                alert('Please fill in both name and signature text');
+                return;
+            }
+
+            const trans = translations[currentLang];
+            status.textContent = trans.statusGenerating;
+            generateBtn.disabled = true;
+
+            // Clear canvas
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Draw signature
+            setTimeout(() => {
+                drawSignature(name, text);
+                generateAudio(text);
+                signatureGenerated = true;
+                
+                status.textContent = trans.statusGenerated;
+                generateBtn.disabled = false;
+                playBtn.disabled = false;
+                downloadBtn.disabled = false;
+            }, 1000);
+        }
+
+        function drawSignature(name, text) {
+            const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+            gradient.addColorStop(0, '#667eea');
+            gradient.addColorStop(1, '#764ba2');
+
+            // Draw name
+            ctx.fillStyle = gradient;
+            ctx.font = 'bold 28px cursive';
+            ctx.textAlign = 'center';
+            ctx.fillText(name, canvas.width / 2, canvas.height / 3);
+
+            // Draw decorative line
+            ctx.strokeStyle = gradient;
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(canvas.width * 0.2, canvas.height / 2);
+            ctx.lineTo(canvas.width * 0.8, canvas.height / 2);
+            ctx.stroke();
+
+            // Draw signature text
+            ctx.fillStyle = '#333';
+            ctx.font = '16px serif';
+            const maxWidth = canvas.width * 0.8;
+            const lineHeight = 20;
+            const words = text.split(' ');
+            let line = '';
+            let y = canvas.height * 0.7;
+
+            for (let n = 0; n < words.length; n++) {
+                const testLine = line + words[n] + ' ';
+                const metrics = ctx.measureText(testLine);
+                const testWidth = metrics.width;
+                
+                if (testWidth > maxWidth && n > 0) {
+                    ctx.fillText(line, canvas.width / 2, y);
+                    line = words[n] + ' ';
+                    y += lineHeight;
+                } else {
+                    line = testLine;
+                }
+            }
+            ctx.fillText(line, canvas.width / 2, y);
+        }
+
+        function generateAudio(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                const voices = speechSynthesis.getVoices();
+                const trans = translations[currentLang];
+                
+                // Find appropriate voice
+                const voice = voices.find(v => v.lang.startsWith(trans.voice.split('-')[0])) || voices[0];
+                if (voice) {
+                    utterance.voice = voice;
+                }
+                
+                utterance.rate = 0.8;
+                utterance.pitch = 1;
+                
+                // Create audio blob for download
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                currentAudio = utterance;
+            }
+        }
+
+        // Play audio
+        playBtn.addEventListener('click', () => {
+            if (currentAudio) {
+                const trans = translations[currentLang];
+                status.textContent = trans.statusPlaying;
+                waveAnimation.classList.remove('hidden');
+                
+                speechSynthesis.speak(currentAudio);
+                
+                currentAudio.onend = () => {
+                    waveAnimation.classList.add('hidden');
+                    status.textContent = trans.statusGenerated;
+                };
+            }
+        });
+
+        // Reset functionality
+        resetBtn.addEventListener('click', () => {
+            nameInput.value = '';
+            textInput.value = '';
+            speechSynthesis.cancel();
+            
+            // Clear canvas
+            ctx.fillStyle = '#ffffff';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            currentAudio = null;
+            signatureGenerated = false;
+            
+            playBtn.disabled = true;
+            downloadBtn.disabled = true;
+            waveAnimation.classList.add('hidden');
+            
+            const trans = translations[currentLang];
+            status.textContent = trans.statusReady;
+        });
+
+        // Download signature
+        downloadBtn.addEventListener('click', () => {
+            if (signatureGenerated) {
+                const link = document.createElement('a');
+                link.download = `signature_${nameInput.value.trim()}_${Date.now()}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            }
+        });
+
+        // Initialize
+        window.addEventListener('load', () => {
+            initCanvas();
+            updateLanguage();
+        });
+
+        window.addEventListener('resize', initCanvas);
+
+        // Load voices
+        speechSynthesis.addEventListener('voiceschanged', () => {
+            // Voices loaded
+        });
+    </script>
+</body>
+</html>

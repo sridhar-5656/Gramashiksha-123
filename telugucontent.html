@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="te">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>తెలుగు: అక్షరాలు, వర్ణమాల, గుణింతాలు, వాక్య నిర్మాణం</title>
+  <style>
+    :root{
+      --bg:#0f172a;          /* slate-900 */
+      --card:#111827;        /* gray-900  */
+      --muted:#64748b;       /* slate-500 */
+      --ring:#22d3ee;        /* cyan-400  */
+      --accent:#a78bfa;      /* violet-300*/
+      --text:#e2e8f0;        /* slate-200 */
+      --chip:#1f2937;        /* gray-800  */
+      --good:#34d399;        /* green-400 */
+      --warn:#fbbf24;        /* amber-300 */
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family: system-ui, -apple-system, Segoe UI, Roboto, Noto Sans, "Noto Sans Telugu", Arial, sans-serif;background:linear-gradient(180deg,#0b1225,#0f172a 20%,#0b1225);color:var(--text)}
+    header{position:sticky;top:0;z-index:10;background:rgba(15,23,42,.8);backdrop-filter:blur(6px);border-bottom:1px solid #1f2937}
+    .wrap{max-width:1100px;margin:auto;padding:16px}
+    h1{font-size:clamp(24px,3.5vw,40px);margin:8px 0 4px 0}
+    .subtitle{color:var(--muted);margin:0 0 8px 0}
+    nav{display:flex;gap:8px;flex-wrap:wrap;padding:8px 0 12px 0}
+    nav button{padding:10px 14px;border-radius:999px;border:1px solid #334155;background:var(--chip);color:var(--text);cursor:pointer}
+    nav button.active{outline:2px solid var(--ring);outline-offset:2px}
+
+    .grid{display:grid;gap:14px}
+    @media(min-width:900px){.grid{grid-template-columns:1.3fr 1fr}}
+
+    .card{background:linear-gradient(180deg,#0f172a,#0b1225);border:1px solid #1f2937;border-radius:16px;padding:16px;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+    .card h2{margin:4px 0 12px 0;font-size:clamp(18px,2.5vw,28px)}
+    .chips{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{display:inline-flex;align-items:center;justify-content:center;min-width:44px;height:44px;padding:0 12px;background:var(--chip);border:1px solid #334155;border-radius:12px;cursor:default;user-select:none;font-size:22px}
+    .chip.kbd{font-size:18px;opacity:.9}
+    .chip.sel{cursor:pointer;transition:.2s transform}
+    .chip.sel:hover{transform:translateY(-2px)}
+
+    .section-title{display:flex;align-items:center;gap:8px;margin:8px 0;color:#cbd5e1}
+    .muted{color:var(--muted)}
+    .row{display:flex;gap:10px;flex-wrap:wrap}
+    .kbd{padding:6px 10px;border-radius:8px;border:1px solid #334155;background:#0b1324}
+    .note{font-size:14px;color:#cbd5e1}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+
+    .table{width:100%;border-collapse:collapse;border:1px solid #334155;border-radius:12px;overflow:hidden}
+    .table thead th{background:#0b1324;color:#cbd5e1;border-bottom:1px solid #334155;padding:10px;text-align:left}
+    .table tbody td{border-bottom:1px solid #1f2937;padding:10px;vertical-align:top}
+
+    .pill{padding:6px 10px;border-radius:999px;background:#0b1324;border:1px solid #334155}
+
+    .gunithalu-grid{display:grid;grid-template-columns:repeat(6, minmax(0,1fr));gap:10px}
+    @media(max-width:700px){.gunithalu-grid{grid-template-columns:repeat(3, minmax(0,1fr));}}
+
+    .builder{display:grid;gap:10px}
+    @media(min-width:900px){.builder{grid-template-columns:1fr 2fr}}
+    select, input[type="text"], textarea{width:100%;padding:10px;border-radius:12px;border:1px solid #334155;background:#0b1324;color:var(--text)}
+    .btn{padding:10px 14px;border-radius:10px;border:1px solid #334155;background:#0b1324;color:var(--text);cursor:pointer}
+    .btn.primary{border-color:transparent;background:linear-gradient(90deg, var(--ring), var(--accent));color:#0b1225;font-weight:600}
+    .out{padding:12px;border:1px dashed #334155;border-radius:12px;min-height:48px;background:#0b1324}
+
+    footer{opacity:.8}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>తెలుగు పాఠశాల — Telugu Learning Kit</h1>
+      <p class="subtitle">అక్షరాలు (Vowels & Consonants), గుణింతాలు (Gunintālu), & వాక్య నిర్మాణం (Sentence Builder)</p>
+      <nav>
+        <button class="tab active" data-target="#vowels">Achulu (Vowels)</button>
+        <button class="tab" data-target="#consonants">Hallulu (Consonants)</button>
+        <button class="tab" data-target="#gunithalu">Gunintālu</button>
+        <button class="tab" data-target="#sentences">Sentence Builder</button>
+        <button class="tab" data-target="#examples">Examples</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap grid">
+    <!-- Left side content -->
+    <section class="card" id="vowels">
+      <h2>అచ్చులు • Vowels</h2>
+      <div class="note">Click to copy any character.</div>
+      <div class="chips" id="vowelChips"></div>
+      <div class="section-title"><span class="pill">Signs (మాత్రలు)</span></div>
+      <div class="chips" id="matraChips"></div>
+    </section>
+
+    <aside class="card" id="info">
+      <h2>Quick Info</h2>
+      <p class="muted">• Telugu has independent vowel letters (అచ్చులు) and consonants (హల్లులు). A consonant combines with a vowel sign (మాత్ర) to form a syllable — this combination is called <strong>గుణింతం</strong> (Gunintam). The basic inherent vowel is <b>అ (a)</b>.</p>
+      <p class="muted">• Use the Gunintālu panel to pick a consonant (e.g., క) and see all its forms (కా, కి, కీ, కు …).</p>
+    </aside>
+
+    <section class="card" id="consonants">
+      <h2>హల్లులు • Consonants</h2>
+      <div class="chips" id="consonantChips"></div>
+    </section>
+
+    <aside class="card" id="gunithalu">
+      <h2>గుణింతాలు • Gunintālu</h2>
+      <div class="row">
+        <label class="pill">Base Consonant:</label>
+        <div id="baseConsonant" class="chip kbd" aria-live="polite">క</div>
+        <button class="btn" id="pickNext">Next →</button>
+      </div>
+      <div class="note" style="margin:8px 0">Click any consonant above to set the base. Then review the full set below.</div>
+      <div class="gunithalu-grid" id="gunGrid" aria-live="polite"></div>
+    </aside>
+
+    <section class="card" id="sentences">
+      <h2>వాక్య నిర్మాణం • Sentence Builder</h2>
+      <div class="builder">
+        <div class="card" style="padding:12px">
+          <label>Subject (కర్త)</label>
+          <select id="subject">
+            <option>నేను</option>
+            <option>నువ్వు</option>
+            <option>అతను</option>
+            <option>ఆమె</option>
+            <option>వారు</option>
+            <option>మనము</option>
+          </select>
+          <label style="margin-top:8px">Object (కర్మ)</label>
+          <select id="object">
+            <option>పుస్తకం</option>
+            <option>భోజనం</option>
+            <option>తెలుగు</option>
+            <option>సినిమా</option>
+            <option>నీరు</option>
+          </select>
+          <label style="margin-top:8px">Verb (క్రియ — base form)</label>
+          <select id="verb">
+            <option value="చదువు">చదువు (to study/read)</option>
+            <option value="తిను">తిను (to eat)</option>
+            <option value="చూడు">చూడు (to watch/see)</option>
+            <option value="తాగు">తాగు (to drink)</option>
+            <option value="నేర్చుకో">నేర్చుకో (to learn)</option>
+            <option value="వెళ్లు">వెళ్లు (to go)</option>
+            <option value="రా">రా (to come)</option>
+          </select>
+          <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">
+            <button class="btn primary" id="makeSentence">Build Sentence</button>
+            <button class="btn" id="clearSentence">Clear</button>
+          </div>
+        </div>
+        <div>
+          <div class="section-title"><span class="pill">Your sentence</span></div>
+          <div id="sentenceOut" class="out" aria-live="polite"></div>
+          <div class="section-title"><span class="pill">IAST transliteration</span></div>
+          <div id="translitOut" class="out mono"></div>
+          <p class="note">Note: This builder joins parts for practice and shows a simple transliteration. Actual verb endings change with tense/politeness (e.g., నేను చదువుతున్నాను, అతను తింటాడు etc.).</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="examples">
+      <h2>ఉదాహరణలు • Examples</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>తెలుగు</th>
+            <th>IAST (approx.)</th>
+            <th>Meaning</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>నేను తెలుగు నేర్చుకుంటున్నాను.</td>
+            <td>nēnu telugu nērchukuntunnānu</td>
+            <td>I am learning Telugu.</td>
+          </tr>
+          <tr>
+            <td>అతను పుస్తకం చదువుతున్నాడు.</td>
+            <td>atanu pustakaṁ chadhuvutunnāḍu</td>
+            <td>He is reading a book.</td>
+          </tr>
+          <tr>
+            <td>ఆమె నీరు తాగింది.</td>
+            <td>āmē nīru tāgindi</td>
+            <td>She drank water.</td>
+          </tr>
+          <tr>
+            <td>వారు సినిమా చూస్తున్నారు.</td>
+            <td>vāru sinimā chūstunnāru</td>
+            <td>They are watching a movie.</td>
+          </tr>
+          <tr>
+            <td>మనము భోజనం తినుదాం.</td>
+            <td>manamu bhōjanaṁ tinudāṁ</td>
+            <td>Let us eat food.</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <footer class="wrap" style="padding-bottom:40px">
+    <p class="muted">Tip: Click any chip to copy it. Use the tabs to jump around.</p>
+  </footer>
+
+  <script>
+    // ===== Data =====
+    const vowels = [
+      "అ","ఆ","ఇ","ఈ","ఉ","ఊ","ఋ","ౠ","ఎ","ఏ","ఐ","ఒ","ఓ","ఔ","అం","అః"
+    ];
+    // Vowel signs (matras). '' represents inherent 'అ'
+    const matras = [
+      { sign:"", name:"అ (inherent)" },
+      { sign:"ా", name:"ఆ (ā)" },
+      { sign:"ి", name:"ఇ (i)" },
+      { sign:"ీ", name:"ఈ (ī)" },
+      { sign:"ు", name:"ఉ (u)" },
+      { sign:"ూ", name:"ఊ (ū)" },
+      { sign:"ృ", name:"ఋ (r̥)" },
+      { sign:"ౄ", name:"ౠ (r̥̄)" },
+      { sign:"ె", name:"ఎ (e)" },
+      { sign:"ే", name:"ఏ (ē)" },
+      { sign:"ై", name:"ఐ (ai)" },
+      { sign:"ొ", name:"ఒ (o)" },
+      { sign:"ో", name:"ఓ (ō)" },
+      { sign:"ౌ", name:"ఔ (au)" },
+      { sign:"ం", name:"అం (ṁ)" },
+      { sign:"ః", name:"అః (ḥ)" },
+      { sign:"్", name:"హల్లుది (virāma)" }
+    ];
+
+    const consonantRows = [
+      ["క","ఖ","గ","ఘ","ఙ"],
+      ["చ","ఛ","జ","ఝ","ఞ"],
+      ["ట","ఠ","డ","ఢ","ణ"],
+      ["త","థ","ద","ధ","న"],
+      ["ప","ఫ","బ","భ","మ"],
+      ["య","ర","ల","వ","ళ"],
+      ["శ","ష","స","హ","క్ష"]
+    ];
+
+    // ===== Helpers =====
+    const $ = (sel,scope=document)=>scope.querySelector(sel);
+    const $$ = (sel,scope=document)=>Array.from(scope.querySelectorAll(sel));
+    const makeChip = (text, cls="chip sel") => {
+      const el = document.createElement('div');
+      el.className = cls; el.textContent = text;
+      el.title = "Click to copy";
+      el.addEventListener('click', ()=>copyToClipboard(text));
+      return el;
+    };
+    function copyToClipboard(text){
+      navigator.clipboard?.writeText(text)
+        .then(()=> toast(`Copied: ${text}`))
+        .catch(()=> alert(text));
+    }
+    let toastTimer=null;
+    function toast(msg){
+      let t = $('#toast');
+      if(!t){
+        t = document.createElement('div');
+        t.id='toast';
+        t.style.position='fixed';
+        t.style.bottom='14px';
+        t.style.left='50%';
+        t.style.transform='translateX(-50%)';
+        t.style.background='linear-gradient(90deg,var(--ring),var(--accent))';
+        t.style.color='#0b1225';
+        t.style.padding='10px 14px';
+        t.style.borderRadius='999px';
+        t.style.fontWeight='700';
+        t.style.boxShadow='0 10px 30px rgba(0,0,0,.35)';
+        document.body.appendChild(t);
+      }
+      t.textContent = msg;
+      t.style.opacity='1';
+      clearTimeout(toastTimer);
+      toastTimer=setTimeout(()=>{t.style.opacity='0'},1400);
+    }
+
+    // ===== Populate Vowels & Matras =====
+    const vowelChips = $('#vowelChips');
+    vowels.forEach(v=> vowelChips.appendChild(makeChip(v)) );
+
+    const matraChips = $('#matraChips');
+    matras.forEach(m=>{
+      const chip = makeChip(m.sign || '—', 'chip sel kbd');
+      chip.title = m.name + (m.sign?` — ${m.sign}`:" — inherent vowel a");
+      matraChips.appendChild(chip);
+    });
+
+    // ===== Populate Consonants =====
+    const consonantChips = $('#consonantChips');
+    let flatConsonants = [];
+    consonantRows.forEach(row=>{
+      const rowWrap = document.createElement('div');
+      rowWrap.className='row';
+      row.forEach(c=>{
+        flatConsonants.push(c);
+        const chip = makeChip(c);
+        chip.addEventListener('click', ()=> setBaseConsonant(c));
+        rowWrap.appendChild(chip);
+      });
+      consonantChips.appendChild(rowWrap);
+    });
+
+    // ===== Gunintalu =====
+    const baseConsonantEl = $('#baseConsonant');
+    let baseConsonant = baseConsonantEl.textContent;
+
+    function setBaseConsonant(c){
+      baseConsonant = c;
+      baseConsonantEl.textContent = c;
+      renderGunithalu();
+    }
+
+    const gunGrid = $('#gunGrid');
+    function renderGunithalu(){
+      gunGrid.innerHTML = '';
+      matras.forEach(m=>{
+        const box = document.createElement('div');
+        box.className='chip';
+        const syllable = m.sign === '' ? baseConsonant : (m.sign === '్' ? baseConsonant + '్' : baseConsonant + m.sign);
+        box.textContent = syllable === baseConsonant + '్' ? syllable + ' (pure)' : syllable;
+        box.title = m.name;
+        box.addEventListener('click', ()=>copyToClipboard(syllable.replace(' (pure)','')));
+        gunGrid.appendChild(box);
+      });
+    }
+    renderGunithalu();
+
+    // Quick cycle button
+    let idx=0;
+    $('#pickNext').addEventListener('click',()=>{
+      idx = (idx+1)%flatConsonants.length; setBaseConsonant(flatConsonants[idx]);
+    });
+
+    // ===== Sentence Builder =====
+    function transliterateIAST(str){
+      // very lightweight, approximate mapping for demo_use only
+      const map = [
+        [/ఔ/g,'au'],[/ఓ/g,'ō'],[/ఒ/g,'o'],[/ఐ/g,'ai'],[/ఏ/g,'ē'],[/ఎ/g,'e'],[/ఊ/g,'ū'],[/ఉ/g,'u'],[/ఈ/g,'ī'],[/ఇ/g,'i'],[/ఆ/g,'ā'],[/అ/g,'a'],
+        [/్క్ష/g,'kṣa'],[/క్ష/g,'kṣa'],
+        [/ంహ/g,'ṁh'],[/ం/g,'ṁ'],[/ః/g,'ḥ'],
+        [/క/g,'ka'],[/ఖ/g,'kha'],[/గ/g,'ga'],[/ఘ/g,'gha'],[/ఙ/g,'ṅa'],
+        [/చ/g,'cha'],[/ఛ/g,'chha'],[/జ/g,'ja'],[/ఝ/g,'jha'],[/ఞ/g,'ña'],
+        [/ట/g,'ṭa'],[/ఠ/g,'ṭha'],[/డ/g,'ḍa'],[/ఢ/g,'ḍha'],[/ణ/g,'ṇa'],
+        [/త/g,'ta'],[/థ/g,'tha'],[/ద/g,'da'],[/ధ/g,'dha'],[/న/g,'na'],
+        [/ప/g,'pa'],[/ఫ/g,'pha'],[/బ/g,'ba'],[/భ/g,'bha'],[/మ/g,'ma'],
+        [/య/g,'ya'],[/ర/g,'ra'],[/ల/g,'la'],[/వ/g,'va'],[/శ/g,'śa'],[/ష/g,'ṣa'],[/స/g,'sa'],[/హ/g,'ha'],[/ళ/g,'ḷa']
+      ];
+      let out = str;
+      map.forEach(([rx,rep])=> out = out.replace(rx,rep));
+      return out;
+    }
+
+    $('#makeSentence').addEventListener('click',()=>{
+      const s = $('#subject').value.trim();
+      const o = $('#object').value.trim();
+      const v = $('#verb').value.trim();
+      const sentence = `${s} ${o} ${v}.`;
+      $('#sentenceOut').textContent = sentence;
+      $('#translitOut').textContent = transliterateIAST(sentence);
+    });
+    $('#clearSentence').addEventListener('click',()=>{
+      $('#sentenceOut').textContent = '';
+      $('#translitOut').textContent = '';
+    });
+
+    // ===== Tabs =====
+    const sections = ['#vowels','#consonants','#gunithalu','#sentences','#examples'].map(id=>document.querySelector(id));
+    $$('.tab').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        $$('.tab').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        const target = btn.getAttribute('data-target');
+        const el = document.querySelector(target);
+        el.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+  </script>
+</body>
+</html>

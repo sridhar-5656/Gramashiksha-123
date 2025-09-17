@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Complaint Letter Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 650px;
+      margin: 30px auto;
+      padding: 20px;
+      border: 1px solid #ddd;
+      border-radius: 10px;
+      background-color: #f9f9f9;
+    }
+    h2 {
+      text-align: center;
+      color: green;
+    }
+    input, select, textarea {
+      width: 100%;
+      margin: 10px 0;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      padding: 10px 15px;
+      background: green;
+      color: white;
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: darkgreen;
+    }
+    .message {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Complaint Letter Generator</h2>
+
+  <form id="complaintForm">
+    <label>Your Name</label>
+    <input type="text" name="username" required>
+
+    <label>Your Email</label>
+    <input type="email" name="email" required>
+
+    <label>Gram Sachivalayam Email</label>
+    <input type="email" name="recipient" placeholder="Enter sachivalayam email" required>
+
+    <label>Select Issue</label>
+    <select name="issue" required>
+      <option value="">--Select--</option>
+      <option value="Drinking Water">Drinking Water Problem</option>
+      <option value="Street Light">Street Light Issue</option>
+      <option value="Drainage">Drainage Issue</option>
+      <option value="Electricity">Electricity Problem</option>
+    </select>
+
+    <label>Describe the Issue</label>
+    <textarea name="description" rows="4" required></textarea>
+
+    <label>Preferred Language</label>
+    <select name="language" required>
+      <option value="en">English</option>
+      <option value="te">Telugu</option>
+      <option value="hi">Hindi</option>
+    </select>
+
+    <button type="submit">Generate & Send</button>
+  </form>
+
+  <div class="message" id="resultMsg"></div>
+
+  <script>
+    const templates = {
+      en: (name, issue, desc) => `
+        Dear Gram Sachivalayam Officer,
+
+        I am ${name}, a resident of this village. I would like to raise a complaint regarding "${issue}".
+
+        Issue Details:
+        ${desc}
+
+        Kindly take appropriate action and grant this request.
+
+        Thank you for your support.
+
+        Best regards,
+        ${name}
+      `,
+      te: (name, issue, desc) => `
+        గౌరవనీయ గ్రామ సచివాలయం అధికారికి,
+
+        నేను ${name}, మా గ్రామ నివాసితుడిని. నేను "${issue}" సంబంధించి నా సమస్యను మీ దృష్టికి తీసుకురావాలనుకుంటున్నాను.
+
+        సమస్య వివరాలు:
+        ${desc}
+
+        దయచేసి స్పందించి నా అభ్యర్థనను మంజూరు చేయగలరు.
+
+        మీ సహకారానికి ధన్యవాదాలు.
+
+        శుభాకాంక్షలతో,
+        ${name}
+      `,
+      hi: (name, issue, desc) => `
+        माननीय ग्राम सचिवालय अधिकारी महोदय,
+
+        मैं ${name}, आपके ग्राम का निवासी हूँ। मैं "${issue}" से संबंधित एक शिकायत दर्ज कराना चाहता हूँ।
+
+        समस्या का विवरण:
+        ${desc}
+
+        कृपया इस पर कार्रवाई करते हुए मेरी मांग को स्वीकृत करें।
+
+        धन्यवाद।
+
+        सादर,
+        ${name}
+      `
+    };
+
+    document.getElementById("complaintForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+      const form = e.target;
+      const username = form.username.value.trim();
+      const email = form.email.value.trim();
+      const recipient = form.recipient.value.trim();
+      const issue = form.issue.value;
+      const description = form.description.value.trim();
+      const language = form.language.value;
+
+      const letter = templates[language](username, issue, description);
+      const resultMsg = document.getElementById("resultMsg");
+
+      try {
+        const response = await fetch("/send-complaint", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            to: recipient,
+            from: email,
+            subject: `Complaint Regarding: ${issue}`,
+            message: letter,
+            username,
+            issue,
+            language,
+            description
+          })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          resultMsg.textContent = "✅ Complaint sent successfully and request granted!";
+          form.reset();
+        } else {
+          resultMsg.textContent = "❌ Failed to send: " + result.error;
+        }
+      } catch (err) {
+        resultMsg.textContent = "❌ Network error: " + err.message;
+      }
+    });
+  </script>
+
+</body>
+</html>

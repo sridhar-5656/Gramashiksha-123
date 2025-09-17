@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Signup</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #3b82f6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Animated background particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 6s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            33% {
+                transform: translateY(-20px) rotate(120deg);
+                opacity: 1;
+            }
+            66% {
+                transform: translateY(20px) rotate(240deg);
+                opacity: 0.7;
+            }
+        }
+
+        /* Main container */
+        .container {
+            position: relative;
+            z-index: 10;
+            width: 400px;
+            min-height: 500px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            transform: translateY(0);
+            animation: slideIn 1s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Toggle buttons */
+        .toggle-container {
+            display: flex;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-btn {
+            flex: 1;
+            padding: 20px;
+            background: transparent;
+            border: none;
+            color: white;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .toggle-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-indicator {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(10px);
+        }
+
+        .toggle-indicator.signup {
+            transform: translateX(100%);
+        }
+
+        /* Form container */
+        .form-container {
+            position: relative;
+            height: 450px;
+            overflow: hidden;
+        }
+
+        .form {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px;
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form.signup-form {
+            transform: translateX(100%);
+        }
+
+        .form.login-form.hide {
+            transform: translateX(-100%);
+        }
+
+        .form.signup-form.show {
+            transform: translateX(0);
+        }
+
+        /* Form elements */
+        .form h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #1e40af;
+            font-size: 28px;
+            font-weight: 700;
+            animation: fadeInDown 0.6s ease-out;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .input-group:nth-child(2) { animation-delay: 0.1s; }
+        .input-group:nth-child(3) { animation-delay: 0.2s; }
+        .input-group:nth-child(4) { animation-delay: 0.3s; }
+        .input-group:nth-child(5) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.9);
+            color: #1e293b;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .input-group label {
+            position: absolute;
+            left: 20px;
+            top: 15px;
+            color: #64748b;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            background: white;
+            padding: 0 5px;
+        }
+
+        .input-group input:focus + label,
+        .input-group input:not(:placeholder-shown) + label {
+            top: -10px;
+            font-size: 12px;
+            color: #3b82f6;
+            font-weight: 600;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #3b82f6, #1d4ed8);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.6s ease-out;
+            animation-delay: 0.5s;
+            animation-fill-mode: both;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(-1px);
+        }
+
+        /* Button ripple effect */
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s;
+        }
+
+        .submit-btn:active::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        /* Forgot password link */
+        .forgot-password {
+            text-align: center;
+            margin-top: 20px;
+            animation: fadeInUp 0.6s ease-out;
+            animation-delay: 0.6s;
+            animation-fill-mode: both;
+        }
+
+        .forgot-password a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #1d4ed8;
+            text-decoration: underline;
+        }
+
+        /* Success/Error messages */
+        .message {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 100;
+        }
+
+        .message.success {
+            background: linear-gradient(45deg, #10b981, #059669);
+            color: white;
+        }
+
+        .message.error {
+            background: linear-gradient(45deg, #ef4444, #dc2626);
+            color: white;
+        }
+
+        .message.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Loading animation */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive design */
+        @media (max-width: 480px) {
+            .container {
+                width: 90%;
+                margin: 20px;
+            }
+            
+            .form {
+                padding: 30px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated background particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Success/Error message -->
+    <div class="message" id="message"></div>
+
+    <div class="container">
+        <!-- Toggle buttons -->
+        <div class="toggle-container">
+            <button class="toggle-btn" id="login-toggle">Login</button>
+            <button class="toggle-btn" id="signup-toggle">Sign Up</button>
+            <div class="toggle-indicator" id="toggle-indicator"></div>
+        </div>
+
+        <!-- Forms container -->
+        <div class="form-container">
+            <!-- Login Form -->
+            <form class="form login-form" id="login-form">
+                <h2>Welcome Back!</h2>
+                
+                <div class="input-group">
+                    <input type="email" id="login-email" placeholder=" " required>
+                    <label for="login-email">Email Address</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="login-password" placeholder=" " required>
+                    <label for="login-password">Password</label>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="login-submit">
+                    <span class="btn-text">Sign In</span>
+                </button>
+                
+                <div class="forgot-password">
+                    <a href="#" id="forgot-link">Forgot your password?</a>
+                </div>
+            </form>
+
+            <!-- Signup Form -->
+            <form class="form signup-form" id="signup-form">
+                <h2>Create Account</h2>
+                
+                <div class="input-group">
+                    <input type="text" id="signup-name" placeholder=" " required>
+                    <label for="signup-name">Full Name</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="email" id="signup-email" placeholder=" " required>
+                    <label for="signup-email">Email Address</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="signup-password" placeholder=" " required>
+                    <label for="signup-password">Password</label>
+                </div>
+                
+                <div class="input-group">
+                    <input type="password" id="signup-confirm" placeholder=" " required>
+                    <label for="signup-confirm">Confirm Password</label>
+                </div>
+                
+                <button type="submit" class="submit-btn" id="signup-submit">
+                    <span class="btn-text">Create Account</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Create animated background particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const numberOfParticles = 50;
+
+            for (let i = 0; i < numberOfParticles; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                // Random size and position
+                const size = Math.random() * 10 + 5;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                
+                // Random animation delay
+                particle.style.animationDelay = Math.random() * 6 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 4) + 's';
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Form switching functionality
+        const loginToggle = document.getElementById('login-toggle');
+        const signupToggle = document.getElementById('signup-toggle');
+        const toggleIndicator = document.getElementById('toggle-indicator');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+        const messageDiv = document.getElementById('message');
+
+        let isSignupMode = false;
+
+        loginToggle.addEventListener('click', () => {
+            if (isSignupMode) {
+                switchToLogin();
+            }
+        });
+
+        signupToggle.addEventListener('click', () => {
+            if (!isSignupMode) {
+                switchToSignup();
+            }
+        });
+
+        function switchToLogin() {
+            isSignupMode = false;
+            toggleIndicator.classList.remove('signup');
+            loginForm.classList.remove('hide');
+            signupForm.classList.remove('show');
+            hideMessage();
+        }
+
+        function switchToSignup() {
+            isSignupMode = true;
+            toggleIndicator.classList.add('signup');
+            loginForm.classList.add('hide');
+            signupForm.classList.add('show');
+            hideMessage();
+        }
+
+        // Message display functions
+        function showMessage(text, type) {
+            messageDiv.textContent = text;
+            messageDiv.className = `message ${type} show`;
+            
+            setTimeout(() => {
+                hideMessage();
+            }, 4000);
+        }
+
+        function hideMessage() {
+            messageDiv.classList.remove('show');
+        }
+
+        // Loading state for buttons
+        function setButtonLoading(button, isLoading) {
+            const btnText = button.querySelector('.btn-text');
+            
+            if (isLoading) {
+                button.disabled = true;
+                btnText.innerHTML = '<span class="loading"></span>Processing...';
+            } else {
+                button.disabled = false;
+                btnText.textContent = button.id === 'login-submit' ? 'Sign In' : 'Create Account';
+            }
+        }
+
+        // Form validation
+        function validateEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+
+        function validatePassword(password) {
+            return password.length >= 6;
+        }
+
+        // Login form submission
+        document.getElementById('login-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            const submitBtn = document.getElementById('login-submit');
+            
+            // Validation
+            if (!validateEmail(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            if (!validatePassword(password)) {
+                showMessage('Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
+            // Simulate login process
+            setButtonLoading(submitBtn, true);
+            
+            setTimeout(() => {
+                setButtonLoading(submitBtn, false);
+                
+                // Simulate successful login
+                if (email === 'demo@example.com' && password === 'password') {
+                    showMessage('Login successful! Welcome back!', 'success');
+                    
+                    // Reset form
+                    setTimeout(() => {
+                        document.getElementById('login-form').reset();
+                    }, 1000);
+                } else {
+                    showMessage('Invalid email or password. Try demo@example.com / password', 'error');
+                }
+            }, 2000);
+        });
+
+        // Signup form submission
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            const name = document.getElementById('signup-name').value;
+            const email = document.getElementById('signup-email').value;
+            const password = document.getElementById('signup-password').value;
+            const confirmPassword = document.getElementById('signup-confirm').value;
+            const submitBtn = document.getElementById('signup-submit');
+            
+            // Validation
+            if (name.length < 2) {
+                showMessage('Please enter your full name', 'error');
+                return;
+            }
+            
+            if (!validateEmail(email)) {
+                showMessage('Please enter a valid email address', 'error');
+                return;
+            }
+            
+            if (!validatePassword(password)) {
+                showMessage('Password must be at least 6 characters long', 'error');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showMessage('Passwords do not match', 'error');
+                return;
+            }
+            
+            // Simulate signup process
+            setButtonLoading(submitBtn, true);
+            
+            setTimeout(() => {
+                setButtonLoading(submitBtn, false);
+                showMessage('Account created successfully! You can now login.', 'success');
+                
+                // Reset form and switch to login
+                setTimeout(() => {
+                    document.getElementById('signup-form').reset();
+                    switchToLogin();
+                }, 2000);
+            }, 2500);
+        });
+
+        // Forgot password functionality
+        document.getElementById('forgot-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            showMessage('Password reset link sent to your email!', 'success');
+        });
+
+        // Input focus animations
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('focus', (e) => {
+                e.target.parentElement.style.transform = 'scale(1.02)';
+            });
+            
+            input.addEventListener('blur', (e) => {
+                e.target.parentElement.style.transform = 'scale(1)';
+            });
+        });
+
+        // Initialize particles on load
+        window.addEventListener('load', () => {
+            createParticles();
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab' && e.shiftKey && document.activeElement === loginToggle) {
+                e.preventDefault();
+                signupToggle.focus();
+            }
+        });
+    </script>
+</body>
+</html>
