@@ -153,9 +153,9 @@ Right Click → Open With Live Server
 
 ---
 
-## 👨‍💻 Author  
+## 👨‍💻 Developer
 **Venkata Sridhar Reddy**  
-📧 Email: **bsridhar185@gmail.com**
+📧 Email: **bsridhar@gmail.com**
 
 ---
 
